@@ -1,13 +1,13 @@
-import Image from 'next/image'
-import MainWrapper from '../components/ui/MainWrapper'
+import { createRanking } from './actions'
+import Home from '../components/Home'
 
-export default function Home() {
-  return (
-    <MainWrapper>
-      <div>
-        <h1>Test senior</h1>
-        <h4>Developed by Luca Formentin</h4>
-      </div>
-    </MainWrapper>
-  )
+export const HomePage = async () => {
+  //TODO: pass to component ranking and display
+  // ?? pass ranking to context to have access everywhere
+  
+  // const ranking = await createRanking()
+
+  return <Home />
 }
+
+export default HomePage

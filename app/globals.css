@@ -25,3 +25,7 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+.form-container {
+  @apply p-6 flex flex-col items-center gap-10 bg-zinc-900 rounded-b-md;
+}

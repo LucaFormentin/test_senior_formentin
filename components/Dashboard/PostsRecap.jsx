@@ -6,7 +6,6 @@ import {
   ListItemText,
   Paper,
   Typography,
-  paperClasses,
 } from '@mui/material'
 
 const PostsRecap = ({ posts }) => {
@@ -18,12 +17,20 @@ const PostsRecap = ({ posts }) => {
     posts.length === 0 ? (
       fallbackContent
     ) : (
-      <Typography variant='h2' fontWeight='bold'>{posts.length}</Typography>
+      <Typography variant='h2' fontWeight='bold'>
+        {posts.length}
+      </Typography>
     )
 
-  const recentPosts = posts.slice(posts.length < 2 ? -posts.length : -2).map(post => (
+  const recentPostsLen = posts.length < 2 ? posts.length : 2
+  const recentPosts = posts.slice(-recentPostsLen).sort((a, b) => b.id - a.id)
+  
+  const postItems = recentPosts.map(post => (
     <ListItem className='rounded-md bg-zinc-800' key={post.id}>
-      <ListItemText primary={post.title} secondary={post.body.trim().slice(0,100)}/>
+      <ListItemText
+        primary={post.title}
+        secondary={post.body.trim().slice(0, 100)}
+      />
     </ListItem>
   ))
 
@@ -36,9 +43,7 @@ const PostsRecap = ({ posts }) => {
       {posts.length > 0 && (
         <Box className='w-2/3 ml-auto'>
           <h3 className='text-xl'>Recent Posts</h3>
-          <List className='flex flex-col gap-2'>
-            {recentPosts}
-          </List>
+          <List className='flex flex-col gap-2'>{postItems}</List>
         </Box>
       )}
     </Paper>

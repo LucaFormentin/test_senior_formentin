@@ -10,7 +10,7 @@ export const getAllPosts = async () => {
   return posts
 }
 
-const getAllUsers = async () => {
+export const getAllUsers = async () => {
   const usersFilepath = path.join(process.cwd(), 'data', 'users.json')
   const users = await getFileData(usersFilepath)
 

@@ -1,37 +1,23 @@
 'use server'
 
 import { insertInFile } from '@/helpers/utils'
-import { getAllPosts } from '../actions'
+import { getAllPosts, getAllUsers } from '../actions'
 import path from 'path'
 
 export const getUserInfo = async userId => {
-  const res = await fetch(
-    `https://jsonplaceholder.typicode.com/users?id=${userId}`
-  )
+  const allUsers = await getAllUsers()
+  const existingUser = allUsers.find(user => user.id === +userId)
 
-  if (!res.ok) throw new Error('Cannot complete the request...')
+  if (!existingUser) throw new Error('Error during retrieving user info...')
 
-  const data = await res.json()
-
-  if (data.length === 0) throw new Error('Error during retrieving user info...')
-
-  const [info] = data
-
-  return info
+  return existingUser
 }
 
 export const getUserRelativePosts = async userId => {
-  const res = await fetch(
-    `https://jsonplaceholder.typicode.com/posts?userId=${userId}`
-  )
+  const allPosts = await getAllPosts()
+  const relativePosts = allPosts.filter(post => post.userId === userId)
 
-  if (!res.ok) throw new Error('Cannot complete the request...')
-
-  const posts = await res.json()
-
-  if (posts.length === 0) throw new Error('No posts yet for this user.')
-
-  return posts
+  return relativePosts
 }
 
 export const insertNewPost = async postData => {

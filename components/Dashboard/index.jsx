@@ -9,11 +9,37 @@ import { useRankingContext } from '@/app/context/RankingContextProvider'
 import { useEffect, useState } from 'react'
 import { getUserRelativePosts } from '@/app/dashboard/actions'
 
+const calculateRankGapByUser = (ranking, userId) => {
+  const index = ranking.findIndex(user => user.id === userId)
+
+  if (index === -1) return null
+
+  const prevUser = index === ranking.length - 1 ? null : ranking[index + 1]
+  const nextUser = index === 0 ? null : ranking[index - 1]
+
+  const gapFromPrev = prevUser
+    ? ranking[index].postCounter - ranking[index + 1].postCounter
+    : 0
+  const gapFromNext = nextUser
+    ? ranking[index - 1].postCounter - ranking[index].postCounter
+    : 0
+
+  return {
+    pos: index + 1,
+    gapFromPrev,
+    gapFromNext,
+  }
+}
+
 const Dashboard = props => {
   const { userInfo } = props
   const { ranking } = useRankingContext()
   const [userPosts, setUserPosts] = useState([])
-  const [userRank, setUserRank] = useState(-1)
+  const [userRank, setUserRank] = useState({
+    pos: -1,
+    gapFromPrev: -1,
+    gapFromNext: -1,
+  })
 
   useEffect(() => {
     const initUserPosts = async () => {
@@ -23,8 +49,8 @@ const Dashboard = props => {
 
     initUserPosts()
 
-    const currentRankPos = ranking.findIndex(user => user.id === userInfo.id)
-    setUserRank(currentRankPos + 1)
+    const rankStatus = calculateRankGapByUser(ranking, userInfo.id)
+    setUserRank(rankStatus)
   }, [ranking])
 
   return (

@@ -8,7 +8,7 @@ import CustomButton from '../ui/CustomButton'
 const LoginFormHeader = () => {
   return (
     <div>
-      <header className='w-full bg-blue-600 flex flex-col justify-center items-center rounded-t-md p-6'>
+      <header className='bg-blue-600 flex flex-col justify-center items-center rounded-t-md p-6'>
         <h1 className='text-2xl font-bold'>Login Form</h1>
         <h4 className='text-md'>Enter your email to manage your profile</h4>
       </header>
@@ -39,20 +39,22 @@ const LoginForm = () => {
   }
 
   return (
-    <div>
-      <LoginFormHeader />
-      <form className='form-container' onSubmit={handleSubmit}>
-        <TextField
-          inputRef={emailRef}
-          required
-          variant='outlined'
-          label='Email'
-          error={hasError}
-          helperText={hasError && 'Incorrect email'}
-          onChange={() => hasError && setHasError(false)}
-        />
-        <CustomButton type='submit'>Login</CustomButton>
-      </form>
+    <div className='flex flex-col items-center justify-center'>
+      <div>
+        <LoginFormHeader />
+        <form className='form-container' onSubmit={handleSubmit}>
+          <TextField
+            inputRef={emailRef}
+            required
+            variant='outlined'
+            label='Email'
+            error={hasError}
+            helperText={hasError && 'Incorrect email'}
+            onChange={() => hasError && setHasError(false)}
+          />
+          <CustomButton type='submit'>Login</CustomButton>
+        </form>
+      </div>
     </div>
   )
 }

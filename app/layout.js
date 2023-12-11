@@ -1,6 +1,5 @@
 import { Inter } from 'next/font/google'
 import './globals.css'
-import MainWrapper from '../components/ui/MainWrapper'
 import { CssBaseline, ThemeProvider } from '@mui/material'
 import muiTheme from '../style/theme'
 import { Toaster } from 'react-hot-toast'

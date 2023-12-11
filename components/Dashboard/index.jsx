@@ -11,23 +11,24 @@ const Dashboard = props => {
   const { userInfo, posts } = props
   const { ranking } = useRankingContext()
 
-  const gridItemStyle = 'flex flex-col border items-center justify-center'
-
   return (
     <Grid container spacing={2}>
-      <Grid item xs={6} className={`${gridItemStyle} gap-10 p-2`}>
-        <h1 className='text-xl font-bold'>
-          Welcome to your dashboard, {userInfo.name}!
-        </h1>
-        <CustomButton
-          type='link'
-          route={`/dashboard/${userInfo.id}/post_creator`}>
-          Create new post
-        </CustomButton>
-        <PostsRecap posts={posts} />
-        <UserRank />
+      <Grid item xs={6}>
+        <div
+          className='flex flex-col border items-center justify-center gap-10 p-2'>
+          <h1 className='text-xl font-bold'>
+            Welcome to your dashboard, {userInfo.name}!
+          </h1>
+          <CustomButton
+            type='link'
+            route={`/dashboard/${userInfo.id}/post_creator`}>
+            Create new post
+          </CustomButton>
+          <PostsRecap posts={posts} />
+          <UserRank userId={userInfo.id}/>
+        </div>
       </Grid>
-      <Grid item xs={6} className={`${gridItemStyle}`}>
+      <Grid item xs={6}>
         <Ranking ranking={ranking} />
       </Grid>
     </Grid>

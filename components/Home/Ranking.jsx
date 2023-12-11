@@ -8,10 +8,10 @@ const Ranking = ({ ranking }) => {
   ))
 
   return (
-    <>
+    <div className='flex flex-col border items-center justify-center'>
       <Typography variant='h4'>Leaderboard</Typography>
       <List>{rankItems}</List>
-    </>
+    </div>
   )
 }
 

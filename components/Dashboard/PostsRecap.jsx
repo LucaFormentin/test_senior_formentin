@@ -18,10 +18,10 @@ const PostsRecap = ({ posts }) => {
     posts.length === 0 ? (
       fallbackContent
     ) : (
-      <Typography variant='h2' className='font-bold'>{posts.length}</Typography>
+      <Typography variant='h2' fontWeight='bold'>{posts.length}</Typography>
     )
 
-  const recentPosts = posts.slice(0, posts.length < 2 ? posts.length : 2).map(post => (
+  const recentPosts = posts.slice(posts.length < 2 ? -posts.length : -2).map(post => (
     <ListItem className='rounded-md bg-zinc-800' key={post.id}>
       <ListItemText primary={post.title} secondary={post.body.trim().slice(0,100)}/>
     </ListItem>

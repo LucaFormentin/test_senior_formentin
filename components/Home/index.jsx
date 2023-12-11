@@ -9,26 +9,24 @@ import { useEffect } from 'react'
 import { createRanking } from '@/app/actions'
 
 const Home = () => {
-  const {ranking, updateRanking} = useRankingContext()
+  const { ranking, updateRanking } = useRankingContext()
 
-  useEffect(()=>{
+  useEffect(() => {
     const refreshRank = async () => {
       const newRanking = await createRanking()
       updateRanking(newRanking)
     }
 
     refreshRank()
-  },[])
-
-  const gridItemStyle = 'flex flex-col border items-center justify-center'
+  }, [])
 
   return (
     <MainWrapper>
       <Grid container spacing={2}>
-        <Grid item xs={6} className={gridItemStyle}>
+        <Grid item xs={6}>
           <Ranking ranking={ranking} />
         </Grid>
-        <Grid item xs={6} className={gridItemStyle}>
+        <Grid item xs={6}>
           <LoginForm />
         </Grid>
       </Grid>

@@ -8,6 +8,8 @@ import { useRef } from 'react'
 import Image from 'next/image'
 import { insertNewPost } from '@/app/dashboard/actions'
 import toast from 'react-hot-toast'
+import { useRankingContext } from '@/app/context/RankingContextProvider'
+import { createRanking } from '@/app/actions'
 
 const AlertBox = () => {
   return (
@@ -29,6 +31,7 @@ const AlertBox = () => {
 }
 
 const PostCreatorModal = () => {
+  const { updateRanking } = useRankingContext()
   const router = useRouter()
   const params = useParams()
   const titleRef = useRef()
@@ -51,11 +54,14 @@ const PostCreatorModal = () => {
       toast.error('Cannot create this post. Please retry...')
       return
     }
+    
+    toast.success('Congrats! You have created a new post!!')
 
-    toast.success('Congrats! You have create a new post!!')
+    const newRanking = await createRanking()
+    console.log("🚀 ~ file: page.js:61 ~ handleSubmit ~ newRanking:", newRanking)
+    updateRanking(newRanking)
+
     closeModal()
-
-    //TODO: update ranking and rank pos
   }
 
   return (
@@ -76,7 +82,6 @@ const PostCreatorModal = () => {
           fullWidth
           multiline
           rows={5}
-          maxRows={5}
           placeholder='Unleash your creativity!'
         />
         <CustomButton type='submit'>Create</CustomButton>

@@ -4,6 +4,7 @@ import MainWrapper from '../components/ui/MainWrapper'
 import { CssBaseline, ThemeProvider } from '@mui/material'
 import muiTheme from '../style/theme'
 import { Toaster } from 'react-hot-toast'
+import { RankingContextProvider } from './context/RankingContextProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -17,7 +18,7 @@ export default function RootLayout({ children }) {
     <html lang='en'>
       <body className={inter.className}>
         <ThemeProvider theme={muiTheme}>
-          {children}
+          <RankingContextProvider>{children}</RankingContextProvider>
           <CssBaseline />
           <Toaster toastOptions={{ duration: 3000 }} />
         </ThemeProvider>

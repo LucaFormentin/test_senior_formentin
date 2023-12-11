@@ -4,27 +4,31 @@ import { Grid } from '@mui/material'
 import PostsRecap from './PostsRecap'
 import CustomButton from '../ui/CustomButton'
 import UserRank from './UserRank'
+import Ranking from '../Home/Ranking'
+import { useRankingContext } from '@/app/context/RankingContextProvider'
 
 const Dashboard = props => {
   const { userInfo, posts } = props
+  const { ranking } = useRankingContext()
+
+  const gridItemStyle = 'flex flex-col border items-center justify-center'
 
   return (
     <Grid container spacing={2}>
-      <Grid
-        item
-        xs={6}
-        className='flex flex-col gap-10 justify-center items-center p-2'>
+      <Grid item xs={6} className={`${gridItemStyle} gap-10 p-2`}>
         <h1 className='text-xl font-bold'>
           Welcome to your dashboard, {userInfo.name}!
         </h1>
-        <CustomButton type='link' route={`/dashboard/${userInfo.id}/post_creator`}>
+        <CustomButton
+          type='link'
+          route={`/dashboard/${userInfo.id}/post_creator`}>
           Create new post
         </CustomButton>
         <PostsRecap posts={posts} />
         <UserRank />
       </Grid>
-      <Grid item xs={6} className='border'>
-        <span>ranking</span>
+      <Grid item xs={6} className={`${gridItemStyle}`}>
+        <Ranking ranking={ranking} />
       </Grid>
     </Grid>
   )

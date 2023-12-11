@@ -36,16 +36,19 @@ export const createRanking = async () => {
     return acc
   }, [])
 
-  const ranking = userPostCount.sort((a, b) => {
-    if (b.postCount !== a.postCount) {
-      return b.postCount - a.postCount
+  const ranking = refreshRankOrder(userPostCount)
+
+  return ranking
+}
+
+const refreshRankOrder = rank =>
+  rank.sort((a, b) => {
+    if (b.postCounter !== a.postCounter) {
+      return b.postCounter - a.postCounter
     }
 
     return a.id - b.id
   })
-
-  return ranking
-}
 
 export const login = async loggedUserEmail => {
   const res = await fetch(

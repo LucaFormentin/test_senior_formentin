@@ -1,11 +1,13 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import CustomModal from '@/components/ui/CustomModal'
-import { Alert, AlertTitle, TextField, Typography } from '@mui/material'
+import { Alert, AlertTitle, TextField } from '@mui/material'
 import CustomButton from '@/components/ui/CustomButton'
 import { useRef } from 'react'
 import Image from 'next/image'
+import { insertNewPost } from '@/app/dashboard/actions'
+import toast from 'react-hot-toast'
 
 const AlertBox = () => {
   return (
@@ -28,6 +30,7 @@ const AlertBox = () => {
 
 const PostCreatorModal = () => {
   const router = useRouter()
+  const params = useParams()
   const titleRef = useRef()
   const bodyRef = useRef()
 
@@ -37,12 +40,21 @@ const PostCreatorModal = () => {
     e.preventDefault()
 
     const newPost = {
+      userId: +params?.user_id || 0,
       title: titleRef.current.value,
       body: bodyRef.current.value,
     }
 
-    console.log(newPost)
-    //TODO: add post to user posts
+    const res = await insertNewPost(newPost)
+
+    if (!res.ok) {
+      toast.error('Cannot create this post. Please retry...')
+      return
+    }
+
+    toast.success('Congrats! You have create a new post!!')
+    closeModal()
+
     //TODO: update ranking and rank pos
   }
 

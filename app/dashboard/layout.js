@@ -5,7 +5,7 @@ const DashboardLayout = ({ children }) => {
   return (
     <>
       <DashboardNavbar />
-      <MainWrapper>{children}</MainWrapper>
+      <>{children}</>
     </>
   )
 }

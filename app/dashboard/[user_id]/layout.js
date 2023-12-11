@@ -1,7 +1,9 @@
+import MainWrapper from '@/components/ui/MainWrapper'
+
 const PersonalDashboardLayout = ({ children, ...props }) => {
   return (
     <>
-      {children}
+      <MainWrapper>{children}</MainWrapper>
       {props.post_creator_modal}
     </>
   )

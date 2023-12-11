@@ -1,17 +1,20 @@
 'use server'
 
-const getAllPosts = async () => {
-  const res = await fetch('https://jsonplaceholder.typicode.com/posts')
-  const data = await res.json()
+import { getFileData } from '@/helpers/utils'
+import path from 'path'
 
-  return data
+export const getAllPosts = async () => {
+  const postFilepath = path.join(process.cwd(), 'data', 'posts.json')
+  const posts = await getFileData(postFilepath)
+
+  return posts
 }
 
 const getAllUsers = async () => {
-  const res = await fetch('https://jsonplaceholder.typicode.com/users')
-  const data = await res.json()
+  const usersFilepath = path.join(process.cwd(), 'data', 'users.json')
+  const users = await getFileData(usersFilepath)
 
-  return data
+  return users
 }
 
 export const createRanking = async () => {

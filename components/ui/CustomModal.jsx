@@ -3,6 +3,8 @@
 import { Modal, Typography } from '@mui/material'
 
 const CustomModal = ({ children, ...props }) => {
+  //TODO: add animation on open/close
+  
   return (
     <Modal
       open={props.open}

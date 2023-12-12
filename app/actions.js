@@ -6,11 +6,13 @@ export const getAllPostsFromDb = async () => {
   const {client, db} = await connectToDb()
   const entries = await db.collection('posts')
 
-  const posts = await entries.find({}).toArray((err,list)=>{
+  const entriesArr = await entries.find({}).toArray((err,list)=>{
     if (err) throw new Error(err)
 
-    return clearEntriesFromDb(list)
+    return list
   })
+
+  const posts = clearEntriesFromDb(entriesArr)
 
   client.close()
   return posts
@@ -20,11 +22,13 @@ export const getAllUsersFromDb = async () => {
   const { client, db } = await connectToDb()
   const entries = await db.collection('users')
 
-  const users = await entries.find({}).toArray((err, list) => {
+  const entriesArr = await entries.find({}).toArray((err, list) => {
     if (err) throw new Error(err)
 
-    return clearEntriesFromDb(list)
+    return list
   })
+
+  const users = clearEntriesFromDb(entriesArr)
 
   client.close()
   return users

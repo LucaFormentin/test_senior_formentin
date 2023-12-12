@@ -7,28 +7,13 @@ import {
   Typography,
 } from '@mui/material'
 import Image from 'next/image'
+import RankingCup from './RankingCup'
+
+const podium_colors_arr = ['bg-yellow-500','bg-zinc-500','bg-amber-800']
 
 const Ranking = ({ ranking }) => {
   const rankItems = ranking.map((item, index) => {
-    let bgColor = 'bg-zinc-300'
-    let iconPath = ''
-
-    switch (index) {
-      case 0:
-        bgColor = 'bg-yellow-500'
-        iconPath = '/images/gold-cup.png'
-        break
-      case 1:
-        bgColor = 'bg-zinc-500'
-        iconPath = '/images/silver-cup.png'
-        break
-      case 2:
-        bgColor = 'bg-amber-700 mb-3'
-        iconPath = '/images/bronze-cup.png'
-        break
-      default:
-        break
-    }
+    let bgColor = index <=2 ? podium_colors_arr[index] : 'bg-zinc-300'
 
     return (
       <ListItem
@@ -39,7 +24,7 @@ const Ranking = ({ ranking }) => {
             {index > 2 ? (
               <Typography fontWeight='bold'>{index + 1}</Typography>
             ) : (
-              <Image src={iconPath} alt='cup-icon' width={45} height={45} />
+              <RankingCup index={index} dim={45}/>
             )}
           </Avatar>
         </ListItemAvatar>

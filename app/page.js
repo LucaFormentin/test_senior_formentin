@@ -1,4 +1,3 @@
-import { createRanking } from './actions'
 import Home from '../components/Home'
 
 export const HomePage = async () => {

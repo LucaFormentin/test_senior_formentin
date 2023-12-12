@@ -1,5 +1,6 @@
 'use server'
 
+import { connectToDb, findUserByEmail } from '@/helpers/db'
 import { getFileData } from '@/helpers/utils'
 import path from 'path'
 
@@ -10,6 +11,20 @@ export const getAllPosts = async () => {
   return posts
 }
 
+export const getAllPostsFromDb = async () => {
+  const {client, db} = await connectToDb()
+  const entries = await db.collection('posts')
+
+  const posts = await entries.find({}).toArray((err,list)=>{
+    if (err) throw new Error(err)
+
+    return list
+  })
+
+  client.close()
+  return posts
+}
+
 export const getAllUsers = async () => {
   const usersFilepath = path.join(process.cwd(), 'data', 'users.json')
   const users = await getFileData(usersFilepath)
@@ -17,9 +32,23 @@ export const getAllUsers = async () => {
   return users
 }
 
+export const getAllUsersFromDb = async () => {
+  const { client, db } = await connectToDb()
+  const entries = await db.collection('users')
+
+  const users = await entries.find({}).toArray((err, list) => {
+    if (err) throw new Error(err)
+
+    return list
+  })
+
+  client.close()
+  return users
+}
+
 export const createRanking = async () => {
-  const posts = await getAllPosts()
-  const users = await getAllUsers()
+  const posts = await getAllPostsFromDb()
+  const users = await getAllUsersFromDb()
 
   const userPostCount = posts.reduce((acc, post) => {
     const { userId } = post
@@ -51,17 +80,11 @@ const refreshRankOrder = rank =>
   })
 
 export const login = async loggedUserEmail => {
-  const res = await fetch(
-    `https://jsonplaceholder.typicode.com/users?email=${loggedUserEmail}`
-  )
+  const {client, db} = await connectToDb()
+  const exisitingUser = await findUserByEmail(db, loggedUserEmail)
 
-  if (!res.ok) throw new Error('Cannot complete the request...')
+  if (!exisitingUser) throw new Error('No user founded with this email!')
 
-  const data = await res.json()
-
-  if (data.length === 0) throw new Error('No user founded with this email...')
-
-  const [user] = data
-
-  return user
+  client.close()
+  return exisitingUser
 }

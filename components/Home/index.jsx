@@ -2,10 +2,10 @@
 
 import { Grid, Typography } from '@mui/material'
 import LoginForm from './LoginForm'
-import Ranking from './Ranking'
 import { useRankingContext } from '@/app/context/RankingContextProvider'
 import { useEffect } from 'react'
 import { createRanking } from '@/app/actions'
+import Ranking from './Ranking'
 
 const Home = () => {
   const { ranking, updateRanking } = useRankingContext()

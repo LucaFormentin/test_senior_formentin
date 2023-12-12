@@ -64,8 +64,8 @@ const Dashboard = props => {
           Welcome to your dashboard, {userInfo.name}!
         </Typography>
 
-        <div className='flex gap-10 items-center justify-center'>
-          <div className='flex flex-col gap-10 items-center'>
+        <div className='flex w-full gap-10 items-center'>
+          <div className='flex flex-col gap-10'>
             <PostsRecap userId={userInfo.id} postsLen={userPosts.length} />
             <UserRank rank={userRank} />
           </div>

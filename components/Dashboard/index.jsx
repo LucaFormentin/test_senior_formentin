@@ -1,13 +1,13 @@
 'use client'
 
-import { Grid } from '@mui/material'
+import { Grid, Typography } from '@mui/material'
 import PostsRecap from './PostsRecap'
-import CustomButton from '../ui/CustomButton'
 import UserRank from './UserRank'
 import Ranking from '../Home/Ranking'
 import { useRankingContext } from '@/app/context/RankingContextProvider'
 import { useEffect, useState } from 'react'
 import { getUserRelativePosts } from '@/app/dashboard/actions'
+import RecentPosts from './RecentPosts'
 
 const calculateRankGapByUser = (ranking, userId) => {
   const index = ranking.findIndex(user => user.id === userId)
@@ -54,22 +54,28 @@ const Dashboard = props => {
   }, [ranking])
 
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={6}>
-        <div className='flex flex-col border items-center justify-center gap-10 p-2'>
-          <h1 className='text-xl font-bold'>
-            Welcome to your dashboard, {userInfo.name}!
-          </h1>
-          <CustomButton
-            type='link'
-            route={`/dashboard/${userInfo.id}/post_creator`}>
-            Create new post
-          </CustomButton>
-          <PostsRecap posts={userPosts} />
-          <UserRank rank={userRank} />
+    <Grid
+      container
+      justifyContent='center'
+      alignItems='center'
+      className='px-10 py-2'>
+      <Grid item container xs={8} className='flex flex-col gap-10'>
+        <Typography variant='h4' sx={{ textAlign: 'center', mx: 'auto' }}>
+          Welcome to your dashboard, {userInfo.name}!
+        </Typography>
+
+        <div className='flex gap-10 items-center justify-center'>
+          <div className='flex flex-col gap-10 items-center'>
+            <PostsRecap userId={userInfo.id} postsLen={userPosts.length} />
+            <UserRank rank={userRank} />
+          </div>
+          <div className='w-2/3 h-max'>
+            <RecentPosts posts={userPosts} />
+          </div>
         </div>
       </Grid>
-      <Grid item xs={6}>
+
+      <Grid item xs={4}>
         <Ranking ranking={ranking} />
       </Grid>
     </Grid>

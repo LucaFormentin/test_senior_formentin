@@ -16,7 +16,7 @@ const DashboardNavbar = () => {
   return (
     <header className='static w-2/3 mx-auto border-b-2 border-b-zinc-600'>
       <Toolbar className='flex items-center'>
-        <h1 className='text-xl font-bold'>Personal Area</h1>
+        <h1 className='text-xl font-bold'>Blogging Competition - Personal Area</h1>
         <CustomButton classes='ml-auto' onClick={handleLogout}>
           Logout
         </CustomButton>

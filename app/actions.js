@@ -1,15 +1,6 @@
 'use server'
 
 import { connectToDb, findUserByEmail } from '@/helpers/db'
-import { getFileData } from '@/helpers/utils'
-import path from 'path'
-
-export const getAllPosts = async () => {
-  const postFilepath = path.join(process.cwd(), 'data', 'posts.json')
-  const posts = await getFileData(postFilepath)
-
-  return posts
-}
 
 export const getAllPostsFromDb = async () => {
   const {client, db} = await connectToDb()
@@ -18,18 +9,11 @@ export const getAllPostsFromDb = async () => {
   const posts = await entries.find({}).toArray((err,list)=>{
     if (err) throw new Error(err)
 
-    return list
+    return clearEntriesFromDb(list)
   })
 
   client.close()
   return posts
-}
-
-export const getAllUsers = async () => {
-  const usersFilepath = path.join(process.cwd(), 'data', 'users.json')
-  const users = await getFileData(usersFilepath)
-
-  return users
 }
 
 export const getAllUsersFromDb = async () => {
@@ -39,11 +23,18 @@ export const getAllUsersFromDb = async () => {
   const users = await entries.find({}).toArray((err, list) => {
     if (err) throw new Error(err)
 
-    return list
+    return clearEntriesFromDb(list)
   })
 
   client.close()
   return users
+}
+
+const clearEntriesFromDb = (entries) => {
+  return entries.map(entry => {
+    const {_id, ...clearedEntry} = entry
+    return clearedEntry
+  })
 }
 
 export const createRanking = async () => {

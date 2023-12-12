@@ -58,7 +58,6 @@ const PostCreatorModal = () => {
     toast.success('Congrats! You have created a new post!!')
 
     const newRanking = await createRanking()
-    console.log("🚀 ~ file: page.js:61 ~ handleSubmit ~ newRanking:", newRanking)
     updateRanking(newRanking)
 
     closeModal()

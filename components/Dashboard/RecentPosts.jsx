@@ -7,6 +7,8 @@ import {
   Paper,
   Typography,
 } from '@mui/material'
+import { Suspense } from 'react'
+import Loading from '../ui/Loading'
 
 const RecentPosts = ({ posts }) => {
   const recentPostsLen = posts.length < 3 ? posts.length : 3
@@ -24,7 +26,9 @@ const RecentPosts = ({ posts }) => {
   return (
     <Paper elevation={2} className='flex flex-col p-5'>
       <h3 className='text-xl'>Recent Posts</h3>
-      <List className='flex flex-col gap-2'>{postItems}</List>
+      <Suspense fallback={<Loading type={'skeleton'} />}>
+        <List className='flex flex-col gap-2'>{postItems}</List>
+      </Suspense>
     </Paper>
   )
 }

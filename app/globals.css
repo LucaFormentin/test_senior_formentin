@@ -26,8 +26,12 @@ body {
     rgb(var(--background-start-rgb));
 }
 
-.form-container {
+.login-form-container {
   @apply p-6 flex flex-col items-center gap-10 bg-zinc-900 rounded-b-md;
+}
+
+.form-container {
+  @apply p-6 flex flex-col items-center gap-5;
 }
 
 .gold-gradient {

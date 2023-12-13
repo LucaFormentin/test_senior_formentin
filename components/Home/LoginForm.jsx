@@ -42,7 +42,7 @@ const LoginForm = () => {
     <div className='flex flex-col items-center justify-center'>
       <div>
         <LoginFormHeader />
-        <form className='form-container' onSubmit={handleSubmit}>
+        <form className='login-form-container' onSubmit={handleSubmit}>
           <TextField
             inputRef={emailRef}
             required

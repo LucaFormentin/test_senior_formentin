@@ -1,13 +1,18 @@
 'use client'
 
 import { Grid, Typography } from '@mui/material'
-import PostsRecap from './PostsRecap'
 import UserRank from './UserRank'
 import Ranking from '../Home/Ranking'
 import { useRankingContext } from '@/app/context/RankingContextProvider'
 import { useEffect, useState } from 'react'
 import { getUserRelativePosts } from '@/app/dashboard/actions'
+import dynamic from 'next/dynamic'
+import Loading from '../ui/Loading'
 import RecentPosts from './RecentPosts'
+
+const PostsRecapComponent = dynamic(() => import('./PostsRecap'), {
+  loading: () => <Loading type={'skeleton'} />,
+})
 
 const calculateRankGapByUser = (ranking, userId) => {
   const index = ranking.findIndex(user => user.id === userId)
@@ -66,7 +71,10 @@ const Dashboard = props => {
 
         <div className='flex w-full gap-10 items-center'>
           <div className='flex flex-col gap-10'>
-            <PostsRecap userId={userInfo.id} postsLen={userPosts.length} />
+            <PostsRecapComponent
+              userId={userInfo.id}
+              postsLen={userPosts.length}
+            />
             <UserRank rank={userRank} />
           </div>
           <div className='w-2/3 h-max'>

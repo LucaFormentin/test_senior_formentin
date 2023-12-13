@@ -1,47 +1,38 @@
-import { Avatar, Box, List, ListItem, ListItemAvatar, Typography } from '@mui/material'
-import RankingCup from './RankingCup'
-import Image from 'next/image'
-
-const podium_colors_arr = [
-  'gold-gradient',
-  'silver-gradient',
-  'bronze-gradient',
-]
+import { List } from '@mui/material'
+import RankingListItem from './RankingListItem'
+import { AnimatePresence, motion } from 'framer-motion'
 
 const RankingList = ({ ranking }) => {
-  const rankItems = ranking.map((item, index) => {
-    let bgColor = index <= 2 ? podium_colors_arr[index] : 'bg-zinc-300'
+  const rankItems = ranking.map((item, index) => (
+    <RankingListItem key={item.id} item={item} index={index} />
+  ))
 
-    return (
-      <ListItem
-        key={item.id}
-        className={`flex rounded-md py-2 text-black ${bgColor}`}>
-        <ListItemAvatar>
-          <Avatar>
-            {index > 2 ? (
-              <Typography fontWeight='bold'>{index + 1}</Typography>
-            ) : (
-              <RankingCup index={index} dim={45} />
-            )}
-          </Avatar>
-        </ListItemAvatar>
-        <Typography>{item.name}</Typography>
-        <Box className='flex ml-auto gap-2 items-center'>
-          <Image
-            src='/images/posts-icon.png'
-            alt='posts-icon'
-            width={24}
-            height={24}
-          />
-          <Typography variant='h6' fontWeight='semibold'>
-            {item.postCounter} p
-          </Typography>
-        </Box>
-      </ListItem>
-    )
-  })
+  const listAnimation = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        ease: 'easeInOut',
+        delayChildren: 0.1,
+        staggerChildren: 0.1,
+        staggerDirection: -1,
+        when: 'beforeChildren',
+      },
+    },
+  }
 
-  return <List className='flex flex-col gap-1'>{rankItems}</List>
+  return (
+    <AnimatePresence>
+      <List
+        className='flex flex-col gap-1'
+        component={motion.ul}
+        variants={listAnimation}
+        initial='hidden'
+        animate='visible'>
+        {rankItems}
+      </List>
+    </AnimatePresence>
+  )
 }
 
 export default RankingList

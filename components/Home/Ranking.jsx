@@ -4,7 +4,7 @@ import Loading from '../ui/Loading'
 
 const RankingListComponent = dynamic(() => import('./RankingList'), {
   loading: () => (
-    <Loading type={'progress'} label={'Calculating the ranking...'} />
+    <Loading type={'progress'} label={'Who will be on the podium?'} />
   ),
 })
 

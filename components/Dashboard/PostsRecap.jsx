@@ -25,7 +25,7 @@ const PostsRecap = ({ userId, postsLen }) => {
 
   return (
     <Paper elevation={2} className='flex w-full p-5'>
-      <Box display={'flex'} flexDirection={'column'}>
+      <Box display={'flex'} flexDirection={'column'} gap={0.5}>
         <h3 className='text-xl'>Your Posts</h3>
         {postsCounter}
         <CustomButton

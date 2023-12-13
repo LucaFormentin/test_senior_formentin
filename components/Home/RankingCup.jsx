@@ -1,7 +1,7 @@
 import Image from 'next/image'
 
 const RankingCup = ({ index, dim }) => {
-  let iconPath = ''
+  let iconPath = null
 
   switch (index) {
     case 0:
@@ -17,7 +17,7 @@ const RankingCup = ({ index, dim }) => {
       break
   }
 
-  return <Image src={iconPath} alt='cup-icon' width={dim} height={dim} />
+  return <Image src={iconPath ?? '/images/climb.png'} alt='cup-icon' width={dim} height={dim} />
 }
 
 export default RankingCup

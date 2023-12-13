@@ -54,7 +54,7 @@ export const createRanking = async () => {
       acc[userIndex].postCounter++
     } else {
       const userInfo = users.find(user => user.id === userId)
-      acc.push({ id: userId, name: userInfo.name, postCounter: 1 })
+      acc.push({ id: userId, name: userInfo.name, username: userInfo.username, postCounter: 1 })
     }
 
     return acc

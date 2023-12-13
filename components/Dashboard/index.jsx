@@ -39,6 +39,7 @@ const calculateRankGapByUser = (ranking, userId) => {
 const Dashboard = props => {
   const { userInfo } = props
   const { ranking } = useRankingContext()
+  const [currentRanking, setCurrentRanking] = useState(ranking)
   const [userPosts, setUserPosts] = useState([])
   const [userRank, setUserRank] = useState({
     pos: -1,
@@ -47,6 +48,8 @@ const Dashboard = props => {
   })
 
   useEffect(() => {
+    setCurrentRanking(ranking)
+
     const initUserPosts = async () => {
       const posts = await getUserRelativePosts(userInfo.id)
       setUserPosts(posts)
@@ -64,7 +67,7 @@ const Dashboard = props => {
       justifyContent='center'
       alignItems='center'
       className='px-10 py-2'>
-      <Grid item container xs={8} className='flex flex-col gap-10'>
+      <Grid item container xs={8} className='flex flex-col gap-5'>
         <Typography variant='h4' sx={{ textAlign: 'center', mx: 'auto' }}>
           Welcome to your dashboard, {userInfo.name}!
         </Typography>
@@ -75,16 +78,15 @@ const Dashboard = props => {
               userId={userInfo.id}
               postsLen={userPosts.length}
             />
-            <UserRank rank={userRank} />
+            <UserRank totUsers={ranking} rank={userRank} />
           </div>
           <div className='w-2/3 h-max'>
             <RecentPosts posts={userPosts} />
           </div>
         </div>
       </Grid>
-
       <Grid item xs={4}>
-        <Ranking ranking={ranking} />
+        <Ranking ranking={currentRanking} />
       </Grid>
     </Grid>
   )

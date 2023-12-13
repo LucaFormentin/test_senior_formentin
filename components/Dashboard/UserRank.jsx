@@ -24,7 +24,7 @@ const handleClimbAlerts = pos => {
   }
 }
 
-const UserRank = ({ rank }) => {
+const UserRank = ({ totUsers, rank }) => {
   const { pos, gapFromNext, gapFromPrev } = rank
 
   useEffect(() => {
@@ -33,15 +33,27 @@ const UserRank = ({ rank }) => {
 
   const fromNext = (
     <Stack direction='row' sx={{ alignItems: 'center' }}>
-      <KeyboardDoubleArrowDownRoundedIcon color='error' fontSize='large' />
-      <Typography variant='h6'>{gapFromNext}</Typography>
+      {pos !== 1 && (
+        <>
+          <KeyboardDoubleArrowDownRoundedIcon color='error' fontSize='large' />
+          <Typography variant='h6'>
+            {gapFromNext === 0 ? 'Tie' : gapFromNext}
+          </Typography>
+        </>
+      )}
     </Stack>
   )
 
   const fromPrev = (
     <Stack direction='row' sx={{ alignItems: 'center' }}>
-      <KeyboardDoubleArrowUpRoundedIcon color='success' fontSize='large' />
-      <Typography variant='h6'>{gapFromPrev}</Typography>
+      {pos !== totUsers && (
+      <>
+        <KeyboardDoubleArrowUpRoundedIcon color='success' fontSize='large' />
+        <Typography variant='h6'>
+          {gapFromPrev === 0 ? 'Tie' : gapFromPrev}
+        </Typography>
+      </>
+      )}
     </Stack>
   )
 
@@ -55,13 +67,13 @@ const UserRank = ({ rank }) => {
     )
 
   return (
-    <Paper elevation={2} className='flex flex-col w-full p-5'>
+    <Paper elevation={2} className='flex flex-col w-full p-5 gap-2'>
       <h3 className='text-xl'>Your Rank</h3>
       <div className='flex items-center gap-2'>
         {posText}
         <div className='mr-auto flex flex-col'>
-          {gapFromNext > 0 && fromNext}
-          {gapFromPrev > 0 && fromPrev}
+          {fromNext}
+          {fromPrev}
         </div>
       </div>
     </Paper>

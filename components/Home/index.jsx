@@ -11,6 +11,8 @@ const Home = () => {
   const { ranking, updateRanking } = useRankingContext()
 
   useEffect(() => {
+    console.log('called effect in home')
+
     const refreshRank = async () => {
       const newRanking = await createRanking()
       updateRanking(newRanking)

@@ -8,6 +8,7 @@ import {
 import RankingCup from './RankingCup'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
+import { useEffect, useState } from 'react'
 
 const podium_colors_arr = [
   'gold-gradient',
@@ -16,16 +17,23 @@ const podium_colors_arr = [
 ]
 
 const RankingListItem = ({ item, index }) => {
+  const [animationKey, setAnimationKey] = useState(index)
+
+  useEffect(() => {
+    if (index === animationKey) return
+    setAnimationKey(index)
+  }, [index])
+
   let bgColor = index <= 2 ? podium_colors_arr[index] : 'bg-zinc-300'
 
   const itemAnimation = {
     hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { ease: 'easeInOut' } },
+    visible: { opacity: 1, transition: { duration: 0.7, ease: 'easeInOut' } },
   }
 
   return (
     <ListItem
-      key={item.id}
+      key={animationKey}
       component={motion.li}
       variants={itemAnimation}
       className={`flex rounded-md py-2 text-black ${bgColor}`}>
@@ -38,7 +46,7 @@ const RankingListItem = ({ item, index }) => {
           )}
         </Avatar>
       </ListItemAvatar>
-      <Typography>{item.name}</Typography>
+      <Typography variant='subtitle1'>{item.username}</Typography>
       <Box className='flex ml-auto gap-2 items-center'>
         <Image
           src='/images/posts-icon.png'

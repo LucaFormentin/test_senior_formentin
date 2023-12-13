@@ -1,8 +1,9 @@
 import { List } from '@mui/material'
 import RankingListItem from './RankingListItem'
 import { AnimatePresence, motion } from 'framer-motion'
+import { useEffect, useState } from 'react'
 
-const RankingList = ({ ranking }) => {
+const RankingList = ({ranking}) => {
   const rankItems = ranking.map((item, index) => (
     <RankingListItem key={item.id} item={item} index={index} />
   ))
@@ -22,7 +23,7 @@ const RankingList = ({ ranking }) => {
   }
 
   return (
-    <AnimatePresence>
+    <AnimatePresence mode='wait'>
       <List
         className='flex flex-col gap-1'
         component={motion.ul}

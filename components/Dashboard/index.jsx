@@ -71,7 +71,6 @@ const Dashboard = props => {
         <Typography variant='h4' sx={{ textAlign: 'center', mx: 'auto' }}>
           Welcome to your dashboard, {userInfo.name}!
         </Typography>
-
         <div className='flex w-full gap-10 items-center'>
           <div className='flex flex-col gap-10'>
             <PostsRecapComponent

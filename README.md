@@ -18,4 +18,5 @@ npm run start
 ## Deploy
 
 Ho eseguito il deploy dell'applicazione utilizzando la piattaforma Vercel.
-Il link per l'utilizzo dell'applicazione è stato fornito via email.
+
+Il link per l'utilizzo dell'applicazione è : https://test-senior-formentin.vercel.app
